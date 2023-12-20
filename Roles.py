@@ -2,6 +2,7 @@ from Board import Board
 import random
 
 class Roles:
+  #initilizes the starting things for Roles
   def __init__(self, board):
     self.board = board
     self.blueAgentNum = 0
@@ -14,6 +15,7 @@ class Roles:
     self.blueAgentKeyWord = []
     self.redAgentKeyWord = []
 
+# defines the assassin and what card it is
   def assassinSet(self):
     self.assassinLocation = random.choice(self.spyMasterList)
     self.assassinIndex = self.spyMasterList.index(self.assassinLocation)
@@ -28,6 +30,7 @@ class Roles:
         self.assassinKeyWord.append(self.assassinWord)
     self.spyMasterList[self.assassinIndex] = ['ASSASSIN' if word == self.assassinWord else word for word in self.assassinLocation]
 
+# defines the bystanders and what cards they are
   def bystanderSet(self):
     for i in range(7):
       self.bystanderLocation = random.choice(self.spyMasterList)
@@ -43,6 +46,7 @@ class Roles:
           self.bystanderKeyWord.append(self.bystanderWord)
       self.spyMasterList[self.bystanderIndex] = ['BYSTANDER' if word == self.bystanderWord else word for word in self.bystanderLocation]
 
+  # defines the blueagents and what cards they are
   def blueAgentSet(self):
     for i in range(self.blueAgentNum):
       self.blueAgentLocation = random.choice(self.spyMasterList)
@@ -57,7 +61,8 @@ class Roles:
         if self.blueAgentWord in self.words:
           self.blueAgentKeyWord.append(self.blueAgentWord)
       self.spyMasterList[self.blueAgentIndex] = ['BLUE AGENT' if word == self.blueAgentWord else word for word in self.blueAgentLocation]
-  
+
+  # defines the Redagents and what cards they are
   def redAgentSet(self):
     for i in range(self.redAgentNum):
       self.redAgentLocation = random.choice(self.spyMasterList)
@@ -72,7 +77,8 @@ class Roles:
         if self.redAgentWord in self.words:
           self.redAgentKeyWord.append(self.redAgentWord)
       self.spyMasterList[self.redAgentIndex] = ['RED AGENT' if word == self.redAgentWord else word for word in self.redAgentLocation]
-  
+
+  # defines who goes first and who needs to get an extra card
   def doubleAgentSet(self):
     global blueAgenNum
     self.doubleAgent = random.randint(0,1)
@@ -84,12 +90,8 @@ class Roles:
       self.blueAgentNum = 8
       self.redAgentNum = 9
       return self.blueAgentNum, self.redAgentNum
-    
-  def firstSet(self):
-    global firstTeam
-    firstTeam = self.doubleAgent
-    return firstTeam
 
+  # sets up the spyMaster card that the spyMaster can use
   def setUpSpyMasterCard(self):
     global firstRowSpyMaster, secondRowSpyMaster, thirdRowSpyMaster, fourthRowSpyMaster, fifthRowSpyMaster
     firstRowSpyMaster = " ".join(self.spyMasterList[0])
@@ -99,6 +101,7 @@ class Roles:
     fifthRowSpyMaster = " ".join(self.spyMasterList[4])
     return firstRowSpyMaster, secondRowSpyMaster, thirdRowSpyMaster, fourthRowSpyMaster, fifthRowSpyMaster
 
+  # allows for other files to use this data
   def setUpIdCard(self):
     global assassinCard, bystanderCard, blueAgentCard, redAgentCard
     assassinCard = self.assassinKeyWord
@@ -106,7 +109,8 @@ class Roles:
     blueAgentCard = self.blueAgentKeyWord
     redAgentCard = self.redAgentKeyWord
     return assassinCard, bystanderCard, blueAgentCard, redAgentCard
-  
+
+  # puts in what order the code will run
   def setRoles(self):
     self.assassinSet()
     self.bystanderSet()
@@ -114,4 +118,3 @@ class Roles:
     self.blueAgentSet()
     self.redAgentSet()
     self.setUpSpyMasterCard()
-    self.setUpIdCard()
